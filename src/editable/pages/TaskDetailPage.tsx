@@ -41,6 +41,49 @@ const getField = (post: SitePost, keys: string[]) => {
   return ''
 }
 
+const decodeHtmlEntities = (value: string) => value
+  .replace(/&lt;/g, '<')
+  .replace(/&gt;/g, '>')
+  .replace(/&quot;/g, '"')
+  .replace(/&#39;|&apos;/g, "'")
+  .replace(/&nbsp;/g, ' ')
+  .replace(/&amp;/g, '&')
+
+const stripHtmlToText = (value: string) => decodeHtmlEntities(value)
+  .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, ' ')
+  .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, ' ')
+  .replace(/<[^>]+>/g, ' ')
+  .replace(/\s+/g, ' ')
+  .trim()
+
+const looksLikeScrapedNavigation = (value: string) => {
+  const normalized = stripHtmlToText(value).toLowerCase()
+  if (!normalized) return false
+  const badPhrases = [
+    'account log in', 'register contact info', 'shopping cart', 'your cart is empty',
+    'go to shop', 'subtotal', 'view cart', 'checkout', 'follow us', 'all categories',
+    'search explore', 'trending now', 'popular listings', 'latest jobs', 'job categories',
+    'join our whatsapp', 'telegram channel', 'featured administrator', 'description manage',
+    'home improvement automotive travel blog shopping service lifestyle', 'casino cbd social media game'
+  ]
+  if (badPhrases.some((phrase) => normalized.includes(phrase))) return true
+  return normalized.length > 220
+}
+
+const isCleanAddress = (value: string) => {
+  const text = stripHtmlToText(value)
+  if (!text || looksLikeScrapedNavigation(text)) return false
+  if (text.length > 180) return false
+  if (/https?:\/\//i.test(text) || /@/.test(text)) return false
+  const hasAddressCue = /\b(road|rd\.?|street|st\.?|avenue|ave\.?|sector|floor|suite|sco|chandigarh|kuwait|city|building|block|lane|near|india|usa|uk|uae|pin|zip|\d{4,})\b/i.test(text)
+  return hasAddressCue
+}
+
+const cleanAddressField = (post: SitePost, keys: string[]) => {
+  const value = getField(post, keys)
+  return isCleanAddress(value) ? stripHtmlToText(value) : ''
+}
+
 const getImages = (post: SitePost) => {
   const content = getContent(post)
   const media = Array.isArray(post.media) ? post.media.map((item) => item?.url).filter((url): url is string => typeof url === 'string' && isUrl(url)) : []
@@ -86,8 +129,9 @@ const sanitizeHtml = (html: string) => hardenLinks(html
 const formatPlainText = (raw: string) => {
   const value = raw.trim()
   if (!value) return ''
-  if (/<[a-z][\s\S]*>/i.test(value)) return sanitizeHtml(linkifyMarkdown(value))
-  return value
+  const decoded = /&lt;[a-z][\s\S]*?&gt;/i.test(value) ? decodeHtmlEntities(value) : value
+  if (/<[a-z][\s\S]*>/i.test(decoded)) return sanitizeHtml(linkifyMarkdown(decoded))
+  return decoded
     .split(/\n{2,}/)
     .map((part) => `<p>${linkifyText(escapeHtml(part).replace(/\n/g, '<br />'))}</p>`)
     .join('')
@@ -96,7 +140,7 @@ const formatPlainText = (raw: string) => {
 const summaryText = (post: SitePost) => post.summary || asText(getContent(post).description) || asText(getContent(post).excerpt) || ''
 const categoryOf = (post: SitePost, fallback: string) => asText(getContent(post).category) || post.tags?.[0] || fallback
 const mapSrcFor = (post: SitePost) => {
-  const address = getField(post, ['address', 'location', 'city'])
+  const address = cleanAddressField(post, ['address', 'location', 'city'])
   const lat = getField(post, ['lat', 'latitude'])
   const lng = getField(post, ['lng', 'lon', 'longitude'])
   if (lat && lng) return `https://maps.google.com/maps?q=${encodeURIComponent(`${lat},${lng}`)}&z=14&output=embed`
@@ -152,7 +196,7 @@ function ArticleDetail({ post, related, comments }: { post: SitePost; related: S
 function ListingDetail({ post, related }: { post: SitePost; related: SitePost[] }) {
   const images = getImages(post)
   const logo = images[0]
-  const address = getField(post, ['address', 'location', 'city'])
+  const address = cleanAddressField(post, ['address', 'location', 'city'])
   const phone = getField(post, ['phone', 'telephone', 'mobile'])
   const email = getField(post, ['email'])
   const website = getField(post, ['website', 'url'])
@@ -189,7 +233,7 @@ function ListingDetail({ post, related }: { post: SitePost; related: SitePost[] 
 function ClassifiedDetail({ post, related }: { post: SitePost; related: SitePost[] }) {
   const images = getImages(post)
   const price = getField(post, ['price', 'amount', 'budget'])
-  const location = getField(post, ['location', 'address', 'city'])
+  const location = cleanAddressField(post, ['location', 'address', 'city'])
   const condition = getField(post, ['condition', 'availability', 'type'])
   const phone = getField(post, ['phone', 'telephone', 'mobile'])
   const email = getField(post, ['email'])
@@ -298,7 +342,7 @@ function PdfDetail({ post, related }: { post: SitePost; related: SitePost[] }) {
 
 function ProfileDetail({ post, related }: { post: SitePost; related: SitePost[] }) {
   const images = getImages(post)
-  const role = getField(post, ['role', 'designation', 'company', 'location'])
+  const role = getField(post, ['role', 'designation', 'company'])
   const website = getField(post, ['website', 'url'])
   const email = getField(post, ['email'])
   return (
