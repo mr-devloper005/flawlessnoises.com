@@ -1,6 +1,6 @@
 'use client'
 
-import { Building2, FileText, Image as ImageIcon, Mail, MapPin, Phone, Sparkles, Bookmark } from 'lucide-react'
+import { Building2, Clock3, FileText, Image as ImageIcon, Mail, MapPin, MessageSquare, Phone, Sparkles, Bookmark } from 'lucide-react'
 import { pagesContent } from '@/editable/content/pages.content'
 import { getFactoryState } from '@/design/factory/get-factory-state'
 import { getProductKind } from '@/design/factory/get-product-kind'
@@ -10,11 +10,11 @@ import { EditableSiteShell } from '@/editable/shell/EditableSiteShell'
 function getTone(kind: ReturnType<typeof getProductKind>) {
   if (kind === 'directory') {
     return {
-      shell: 'bg-[#f8fbff] text-slate-950',
-      panel: 'border border-slate-200 bg-white',
-      soft: 'border border-slate-200 bg-slate-50',
-      muted: 'text-slate-600',
-      action: 'bg-slate-950 text-white hover:bg-slate-800',
+      shell: 'bg-[#FAEB92] text-black',
+      panel: 'border border-[#f4c8ed] bg-[#fff8c7]',
+      soft: 'border border-[#f4c8ed] bg-[#fff8c7]',
+      muted: 'text-[#3b3140]',
+      action: 'bg-[#9929EA] text-white hover:bg-[#FF5FCF]',
     }
   }
   if (kind === 'editorial') {
@@ -28,11 +28,11 @@ function getTone(kind: ReturnType<typeof getProductKind>) {
   }
   if (kind === 'visual') {
     return {
-      shell: 'bg-[#07101f] text-white',
+      shell: 'bg-black text-white',
       panel: 'border border-white/10 bg-white/6',
       soft: 'border border-white/10 bg-white/5',
-      muted: 'text-slate-300',
-      action: 'bg-[#8df0c8] text-[#07111f] hover:bg-[#77dfb8]',
+      muted: 'text-[#FAEB92]/75',
+      action: 'bg-[#FF5FCF] text-black hover:bg-[#FAEB92]',
     }
   }
   return {
@@ -76,26 +76,58 @@ export default function ContactPage() {
 
   return (
     <EditableSiteShell className={tone.shell}>
-      <main className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-        <section className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.24em] opacity-70">{pagesContent.contact.eyebrow}</p>
-            <h1 className="mt-4 text-5xl font-semibold tracking-[-0.05em]">{pagesContent.contact.title}</h1>
-            <p className={`mt-5 max-w-2xl text-sm leading-8 ${tone.muted}`}>{pagesContent.contact.description}</p>
-            <div className="mt-8 space-y-4">
-              {lanes.map((lane) => (
-                <div key={lane.title} className={`rounded-[1.6rem] p-5 ${tone.soft}`}>
-                  <lane.icon className="h-5 w-5" />
-                  <h2 className="mt-3 text-xl font-semibold">{lane.title}</h2>
-                  <p className={`mt-2 text-sm leading-7 ${tone.muted}`}>{lane.body}</p>
+      <main className="bg-[#FAEB92] text-black">
+        <section className="relative overflow-hidden bg-black px-4 py-16 text-white sm:px-6 lg:px-8">
+          <div className="pointer-events-none absolute -left-24 top-0 h-80 w-80 rotate-[-24deg] bg-[#9929EA]/45" />
+          <div className="pointer-events-none absolute right-[-8%] bottom-0 h-72 w-52 rotate-[-18deg] bg-[#FF5FCF]/30" />
+          <div className="relative mx-auto grid max-w-[var(--editable-container)] gap-8 lg:grid-cols-[0.92fr_1.08fr] lg:items-end">
+            <div>
+              <p className="inline-flex rounded-md bg-[#FF5FCF] px-5 py-3 text-sm font-black text-black">{pagesContent.contact.eyebrow}</p>
+              <h1 className="mt-7 max-w-3xl text-4xl font-black leading-[1.03] tracking-[-0.05em] sm:text-6xl">{pagesContent.contact.title}</h1>
+              <p className="mt-6 max-w-2xl text-base leading-8 text-white/72">{pagesContent.contact.description}</p>
+            </div>
+            <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
+              {[
+                ['Response lane', 'Publishing, partnerships, and support'],
+                ['Useful detail', 'Share links, page type, and context'],
+                ['Next step', 'We route your request clearly'],
+              ].map(([title, body]) => (
+                <div key={title} className="border border-white/12 bg-white/5 p-4">
+                  <p className="text-sm font-black text-[#FAEB92]">{title}</p>
+                  <p className="mt-1 text-xs font-semibold leading-5 text-white/62">{body}</p>
                 </div>
               ))}
             </div>
           </div>
+        </section>
 
-          <div className={`rounded-[2rem] p-7 ${tone.panel}`}>
-            <h2 className="text-2xl font-semibold">{pagesContent.contact.formTitle}</h2>
-            <EditableContactLeadForm />
+        <section className="mx-auto grid max-w-[var(--editable-container)] gap-8 px-4 py-14 sm:px-6 lg:grid-cols-[0.9fr_1.1fr] lg:px-8">
+          <div className="grid gap-4">
+            {lanes.map((lane) => (
+              <div key={lane.title} className="border border-[#f4c8ed] bg-[#fff8c7] p-6 shadow-sm">
+                <lane.icon className="h-6 w-6 text-[#9929EA]" />
+                <h2 className="mt-4 text-xl font-black tracking-[-0.04em]">{lane.title}</h2>
+                <p className="mt-3 text-sm leading-7 text-[#3b3140]">{lane.body}</p>
+              </div>
+            ))}
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="border border-[#f4c8ed] bg-white p-5">
+                <Clock3 className="h-5 w-5 text-[#9929EA]" />
+                <p className="mt-3 text-sm font-black">Helpful context speeds things up.</p>
+              </div>
+              <div className="border border-[#f4c8ed] bg-white p-5">
+                <MessageSquare className="h-5 w-5 text-[#9929EA]" />
+                <p className="mt-3 text-sm font-black">Clear requests get clearer replies.</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="border border-[#f4c8ed] bg-[#fff8c7] p-5 shadow-[0_18px_55px_rgba(153,41,234,0.12)] sm:p-7">
+            <h2 className="text-2xl font-black tracking-[-0.04em]">{pagesContent.contact.formTitle}</h2>
+            <p className="mt-2 text-sm leading-7 text-[#3b3140]">Use the form for publishing questions, content requests, partnership ideas, or account help.</p>
+            <div className="mt-6">
+              <EditableContactLeadForm />
+            </div>
           </div>
         </section>
       </main>

@@ -4,6 +4,7 @@ import { buildPageMetadata } from '@/lib/seo'
 import { EditableSiteShell } from '@/editable/shell/EditableSiteShell'
 import { EditableLocalSignupForm } from '@/editable/components/EditableLocalAuthForms'
 import { pagesContent } from '@/editable/content/pages.content'
+import { CheckCircle2, Layers3, Sparkles } from 'lucide-react'
 
 export async function generateMetadata(): Promise<Metadata> {
   return buildPageMetadata({ path: '/signup', title: 'Sign up', description: pagesContent.auth.signup.metadataDescription })
@@ -12,17 +13,45 @@ export async function generateMetadata(): Promise<Metadata> {
 export default function SignupPage() {
   return (
     <EditableSiteShell>
-      <main className="bg-[var(--editable-page-text,#2f1d16)] text-[var(--editable-page-bg,#fff4e4)]">
-        <section className="mx-auto grid min-h-[calc(100vh-12rem)] max-w-[var(--editable-container)] items-center gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[0.9fr_1fr] lg:px-8">
-          <div className="rounded-[2rem] border border-white/10 bg-white/[0.08] p-6 shadow-[0_24px_70px_rgba(0,0,0,0.22)] backdrop-blur sm:p-8">
-            <h1 className="text-3xl font-black tracking-[-0.05em]">{pagesContent.auth.signup.formTitle}</h1>
-            <EditableLocalSignupForm />
-            <p className="mt-5 text-sm text-white/65">Already have an account? <Link href="/login" className="font-black text-white underline-offset-4 hover:underline">{pagesContent.auth.signup.loginCta}</Link></p>
+      <main className="bg-[#FAEB92] text-black">
+        <section className="relative overflow-hidden bg-black px-4 py-16 text-white sm:px-6 lg:px-8">
+          <div className="pointer-events-none absolute -left-24 top-0 h-80 w-80 rotate-[-24deg] bg-[#9929EA]/45" />
+          <div className="pointer-events-none absolute right-[-8%] bottom-0 h-72 w-52 rotate-[-18deg] bg-[#FF5FCF]/30" />
+          <div className="relative mx-auto grid max-w-[var(--editable-container)] gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+            <div>
+              <p className="inline-flex rounded-md bg-[#FF5FCF] px-5 py-3 text-sm font-black text-black">{pagesContent.auth.signup.badge}</p>
+              <h1 className="mt-7 max-w-3xl text-4xl font-black leading-[1.03] tracking-[-0.05em] sm:text-6xl">{pagesContent.auth.signup.title}</h1>
+              <p className="mt-6 max-w-2xl text-base leading-8 text-white/72">{pagesContent.auth.signup.description}</p>
+            </div>
+            <div className="grid gap-3">
+              {['Create a member profile', 'Unlock the publishing workspace', 'Submit content through guided forms'].map((item) => (
+                <div key={item} className="flex items-center gap-3 border border-white/12 bg-white/5 p-4 text-sm font-bold text-white/75">
+                  <CheckCircle2 className="h-5 w-5 text-[#FAEB92]" />
+                  {item}
+                </div>
+              ))}
+            </div>
           </div>
-          <div>
-            <p className="text-xs font-black uppercase tracking-[0.28em] text-white/60">{pagesContent.auth.signup.badge}</p>
-            <h2 className="mt-5 max-w-xl text-5xl font-black leading-[0.98] tracking-[-0.07em] sm:text-6xl">{pagesContent.auth.signup.title}</h2>
-            <p className="mt-6 max-w-lg text-sm leading-8 text-white/68">{pagesContent.auth.signup.description}</p>
+        </section>
+
+        <section className="mx-auto grid max-w-[var(--editable-container)] gap-8 px-4 py-14 sm:px-6 lg:grid-cols-[0.88fr_1.12fr] lg:px-8">
+          <div className="border border-[#f4c8ed] bg-[#fff8c7] p-6 shadow-[0_18px_55px_rgba(153,41,234,0.12)] sm:p-8">
+            <h2 className="text-3xl font-black tracking-[-0.05em]">{pagesContent.auth.signup.formTitle}</h2>
+            <EditableLocalSignupForm />
+            <p className="mt-5 text-sm text-[#3b3140]">Already have an account? <Link href="/login" className="font-black text-black underline-offset-4 hover:underline">{pagesContent.auth.signup.loginCta}</Link></p>
+          </div>
+
+          <div className="grid gap-4">
+            <div className="border border-[#f4c8ed] bg-white p-6">
+              <Sparkles className="h-6 w-6 text-[#9929EA]" />
+              <h3 className="mt-4 text-2xl font-black tracking-[-0.04em]">Built for contributors</h3>
+              <p className="mt-3 text-sm leading-7 text-[#3b3140]">Your account keeps the create page close by, so submitting articles, visuals, resources, and listing-style content feels like part of the same product.</p>
+            </div>
+            <div className="border border-[#f4c8ed] bg-white p-6">
+              <Layers3 className="h-6 w-6 text-[#9929EA]" />
+              <h3 className="mt-4 text-2xl font-black tracking-[-0.04em]">One visual system</h3>
+              <p className="mt-3 text-sm leading-7 text-[#3b3140]">The account pages now use the same rhythm as the homepage, with normal-width panels and clear contrast for every form field.</p>
+            </div>
           </div>
         </section>
       </main>

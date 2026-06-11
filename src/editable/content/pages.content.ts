@@ -53,11 +53,12 @@ export const pagesContent = {
   },
   about: {
     badge: 'Our Story',
-    title: 'A calmer, clearer way to explore content.',
-    description: `${slot4BrandConfig.siteName} is built to make long-form reading, visual discovery, and supporting resources feel like one unified experience.`,
+    title: 'A focused publishing space for stories, visuals, and useful discovery.',
+    description: `${slot4BrandConfig.siteName} brings articles, image-led posts, profiles, resources, and discovery pages into one steady experience that feels easy to browse and easy to return to.`,
     paragraphs: [
-      'Instead of splitting everything into disconnected pages, the platform keeps related content easy to move through and easy to understand.',
-      'Whether someone starts with an article, listing, image post, or resource page, they can continue exploring without losing context.',
+      'The site is designed around a simple idea: visitors should be able to move from a headline to a visual post, from a resource to a profile, or from a search result to a deeper archive without feeling like they have entered a different product each time.',
+      'Every section keeps a familiar rhythm: clear page titles, readable summaries, strong visual cues, and direct paths into the next useful page. That consistency makes the site feel curated instead of scattered.',
+      'For publishers and contributors, the experience stays practical. Content can be submitted, explored, and organized while the public pages remain polished, fast, and approachable.',
     ],
     values: [
       {
@@ -76,8 +77,8 @@ export const pagesContent = {
   },
   contact: {
     eyebrow: `Contact ${slot4BrandConfig.siteName}`,
-    title: 'A support page that matches the product, not a generic contact form.',
-    description: 'Tell us what you are trying to publish, fix, or launch. We will route it through the right lane instead of forcing every request into the same support bucket.',
+    title: 'Tell us what you want to publish, improve, or launch next.',
+    description: 'Share the goal, the page type, and any details that matter. The contact flow is built for publishing requests, content support, partnerships, and practical site questions.',
     formTitle: 'Send a message',
   },
 
@@ -117,8 +118,8 @@ export const pagesContent = {
     login: {
       metadataDescription: 'Login page for this site.',
       badge: 'Member access',
-      title: 'Welcome back to your publishing space.',
-      description: 'Login to continue browsing, managing submissions, and creating new content from your account.',
+      title: 'Welcome back to your publishing workspace.',
+      description: 'Sign in to continue creating, reviewing, and submitting content through a focused account space built around the same visual system as the public site.',
       formTitle: 'Login',
       submitLabel: 'Continue',
       noAccount: 'No account matched these details. Create an account first, then login.',
@@ -128,8 +129,8 @@ export const pagesContent = {
     signup: {
       metadataDescription: 'Signup page for this site.',
       badge: 'Site access',
-      title: 'Create your account and start publishing.',
-      description: 'Create an account to access the publishing workspace, save details, and submit content through the site.',
+      title: 'Create your account and start shaping new pages.',
+      description: 'Set up access to the publishing workspace, prepare submissions, and keep your content activity connected to one clear account.',
       formTitle: 'Create account',
       submitLabel: 'Create account',
       passwordShort: 'Use at least 4 characters for the password.',
