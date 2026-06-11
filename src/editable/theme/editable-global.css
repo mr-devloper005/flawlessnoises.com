@@ -15,6 +15,7 @@ body {
   background-color: var(--slot4-page-bg) !important;
   color: var(--slot4-page-text) !important;
   background-image: var(--slot4-body-gradient) !important;
+  overflow-x: hidden;
 }
 
 ::selection {
@@ -41,4 +42,92 @@ body {
 
 .article-content a {
   color: var(--slot4-accent-fill);
+}
+
+.editable-marquee {
+  display: flex;
+  width: max-content;
+  animation: editable-marquee 30s linear infinite;
+}
+
+.editable-marquee-slow {
+  animation-duration: 46s;
+}
+
+.editable-marquee-reverse {
+  animation-direction: reverse;
+}
+
+.editable-float-a {
+  animation: editable-float-a 7s ease-in-out infinite;
+}
+
+.editable-float-b {
+  animation: editable-float-b 9s ease-in-out infinite;
+}
+
+.editable-hero-title {
+  animation: editable-rise 900ms ease both;
+}
+
+.editable-card-glow {
+  position: relative;
+  isolation: isolate;
+}
+
+.editable-card-glow::after {
+  background: linear-gradient(120deg, transparent 0%, rgba(255, 222, 56, 0.22) 50%, transparent 100%);
+  content: "";
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  transform: translateX(-45%);
+  transition: opacity 240ms ease, transform 700ms ease;
+  z-index: 1;
+}
+
+.editable-card-glow:hover::after {
+  opacity: 1;
+  transform: translateX(45%);
+}
+
+.editable-parallax-plane {
+  will-change: transform;
+  animation: editable-plane 16s ease-in-out infinite alternate;
+}
+
+@keyframes editable-marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+@keyframes editable-float-a {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(-8deg); }
+  50% { transform: translate3d(0, -18px, 0) rotate(-5deg); }
+}
+
+@keyframes editable-float-b {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(7deg); }
+  50% { transform: translate3d(0, 16px, 0) rotate(4deg); }
+}
+
+@keyframes editable-rise {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes editable-plane {
+  from { transform: translate3d(-1.5%, -1%, 0) scale(1); }
+  to { transform: translate3d(1.5%, 1%, 0) scale(1.04); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .editable-marquee,
+  .editable-float-a,
+  .editable-float-b,
+  .editable-hero-title,
+  .editable-parallax-plane {
+    animation: none !important;
+  }
 }

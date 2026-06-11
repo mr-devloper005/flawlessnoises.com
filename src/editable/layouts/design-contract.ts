@@ -1,23 +1,24 @@
 import type { CSSProperties } from 'react'
 
 export const editableRootStyle = {
-  '--slot4-page-bg': '#fff9f2',
-  '--slot4-page-text': '#111111',
-  '--slot4-panel-bg': '#fff3e8',
-  '--slot4-surface-bg': '#ffffff',
-  '--slot4-muted-text': '#4f463f',
-  '--slot4-soft-muted-text': '#6b6258',
-  '--slot4-accent': '#ff6600',
-  '--slot4-accent-fill': '#ff6600',
-  '--slot4-accent-soft': '#d1e0ff',
-  '--slot4-dark-bg': '#111111',
+  '--editable-container': '1180px',
+  '--slot4-page-bg': '#FAEB92',
+  '--slot4-page-text': '#000000',
+  '--slot4-panel-bg': '#000000',
+  '--slot4-surface-bg': '#fff8c7',
+  '--slot4-muted-text': '#3b3140',
+  '--slot4-soft-muted-text': '#6f5771',
+  '--slot4-accent': '#9929EA',
+  '--slot4-accent-fill': '#FF5FCF',
+  '--slot4-accent-soft': '#f4c8ed',
+  '--slot4-dark-bg': '#000000',
   '--slot4-dark-text': '#ffffff',
-  '--slot4-media-bg': '#e9e2da',
-  '--slot4-cream': '#fdf1e5',
-  '--slot4-warm': '#fff9f2',
-  '--slot4-lavender': '#d1e0ff',
-  '--slot4-gray': '#f6f6f6',
-  '--slot4-body-gradient': 'linear-gradient(180deg, #fdf1e5 0%, #fff9f2 38%, #f6f6f6 100%)',
+  '--slot4-media-bg': '#f4c8ed',
+  '--slot4-cream': '#FAEB92',
+  '--slot4-warm': '#fff8c7',
+  '--slot4-lavender': '#f4c8ed',
+  '--slot4-gray': '#fff8c7',
+  '--slot4-body-gradient': 'linear-gradient(180deg, #000000 0%, #000000 22%, #FAEB92 22%, #FAEB92 100%)',
 } as CSSProperties
 
 export const editablePalette = {
@@ -50,7 +51,7 @@ export const editablePalette = {
 export const editableDesignContract = {
   shell: {
     page: `min-h-screen ${editablePalette.pageBg} ${editablePalette.pageText}`,
-    section: 'mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8',
+    section: 'mx-auto w-full max-w-[var(--editable-container)] px-4 sm:px-6 lg:px-8',
     sectionY: 'py-14 sm:py-16 lg:py-20',
   },
   layout: {
@@ -66,14 +67,14 @@ export const editableDesignContract = {
     body: 'text-base leading-relaxed',
   },
   surface: {
-    card: `rounded-2xl border ${editablePalette.border} ${editablePalette.surfaceBg} ${editablePalette.shadow}`,
-    soft: `rounded-2xl border ${editablePalette.border} ${editablePalette.surfaceBg}`,
-    dark: `rounded-2xl ${editablePalette.darkBg} ${editablePalette.darkText} ${editablePalette.shadowStrong}`,
+    card: `rounded-none border ${editablePalette.border} ${editablePalette.surfaceBg} ${editablePalette.shadow}`,
+    soft: `rounded-none border ${editablePalette.border} ${editablePalette.surfaceBg}`,
+    dark: `rounded-none ${editablePalette.darkBg} ${editablePalette.darkText} ${editablePalette.shadowStrong}`,
   },
   button: {
-    primary: `inline-flex items-center justify-center rounded-full ${editablePalette.darkBg} px-8 py-3.5 text-sm font-semibold text-white transition hover:opacity-90`,
-    secondary: `inline-flex items-center justify-center rounded-full border ${editablePalette.border} ${editablePalette.surfaceBg} px-8 py-3.5 text-sm font-semibold ${editablePalette.surfaceText} transition hover:bg-black/[0.03]`,
-    accent: `inline-flex items-center justify-center rounded-full ${editablePalette.accentBg} px-8 py-3.5 text-sm font-semibold text-white transition hover:opacity-90`,
+    primary: `inline-flex items-center justify-center rounded-full ${editablePalette.accentBg} px-8 py-3.5 text-sm font-black text-white transition hover:-translate-y-0.5 hover:shadow-[0_12px_28px_rgba(0,0,0,0.16)]`,
+    secondary: `inline-flex items-center justify-center rounded-full border border-white/20 bg-white px-8 py-3.5 text-sm font-black text-[var(--slot4-page-text)] transition hover:-translate-y-0.5`,
+    accent: `inline-flex items-center justify-center rounded-full ${editablePalette.accentBg} px-8 py-3.5 text-sm font-black text-white transition hover:-translate-y-0.5`,
   },
   media: {
     frame: `relative overflow-hidden rounded-xl ${editablePalette.mediaBg}`,
